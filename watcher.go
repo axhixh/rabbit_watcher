@@ -12,7 +12,7 @@ func connections(data []byte) int {
 	var v []interface{}
 	err := json.Unmarshal(data, &v)
 	if err != nil {
-		log.Println("Unable to parse connections %v", data)
+		log.Printf("Unable to parse connections %v", data)
 		return -1
 	}
 	return len(v)
@@ -22,7 +22,7 @@ func nodes(data []byte) []Node {
 	var v []Node
 	err := json.Unmarshal(data, &v)
 	if err != nil {
-		log.Println("Unable to parse node data %v", data)
+		log.Printf("Unable to parse node data %v", data)
 		return make([]Node, 0)
 	}
 	return v
