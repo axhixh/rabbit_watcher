@@ -1,0 +1,12 @@
+{ 
+    "rabbitmq": {
+        "url": "https://rabbitmq.axhixh.com.np",
+        "user": "bugsbunny",
+        "password": "what's up doc",
+        "verifySSL": true
+    },
+    "influxdb": {
+        "url": "influxdb.axhixh.com.np:9000"
+    }
+}
+
