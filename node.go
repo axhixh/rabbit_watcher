@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 /* Represents a RabbitMQ node and its metrics */
 type Node struct {
@@ -29,15 +32,19 @@ func (n Node) Tags() map[string]string {
 	return map[string]string{"node": n.Name}
 }
 
+// Use the JSON fields as the fields for InfluxDB
 func (n Node) Fields() map[string]interface{} {
-	return map[string]interface{}{
-		"mem_used":      n.MemUsed,
-		"mem_list":      n.MemLimit,
-		"proc_used":     n.ProcUsed,
-		"proc_total":    n.ProcTotal,
-		"sockets_used":  n.SocketUsed,
-		"sockets_total": n.SocketTotal,
-		"fd_used":       n.FdUsed,
-		"fd_total":      n.FdTotal,
+	values := reflect.ValueOf(n)
+	metadata := reflect.TypeOf(n)
+	fields := make(map[string]interface{}, metadata.NumField())
+	for i := 0; i < metadata.NumField(); i++ {
+		field := metadata.Field(i)
+		if field.Type.Kind() != reflect.Uint {
+			continue
+		}
+		key := field.Tag.Get("json")
+		value := values.FieldByName(field.Name)
+		fields[key] = value.Uint()
 	}
+	return fields
 }
