@@ -27,7 +27,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	connections := Connection{
+	connections := Connections{
 		Name:  rabbitmq.Host,
 		Count: connections(buf),
 	}

@@ -3,24 +3,24 @@ package main
 import "fmt"
 
 /* Represents Connections of a RabbitMQ server or cluster */
-type Connection struct {
+type Connections struct {
 	Name  string
 	Count int
 }
 
-func (c Connection) String() string {
+func (c Connections) String() string {
 	return fmt.Sprintf("Connection: %d", c.Count)
 }
 
-func (c Connection) SeriesName() string {
+func (c Connections) SeriesName() string {
 	return "rabbitmq_connections"
 }
 
-func (c Connection) Tags() map[string]string {
+func (c Connections) Tags() map[string]string {
 	return map[string]string{"node": c.Name}
 }
 
-func (c Connection) Fields() map[string]interface{} {
+func (c Connections) Fields() map[string]interface{} {
 	return map[string]interface{}{
 		"connections": c.Count,
 	}
