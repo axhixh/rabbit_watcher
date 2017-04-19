@@ -8,14 +8,14 @@ import (
 	"net/http"
 )
 
-func connections(data []byte) int {
-	var v []interface{}
+func connections(data []byte) []Connection {
+	var v []Connection
 	err := json.Unmarshal(data, &v)
 	if err != nil {
 		log.Printf("Unable to parse connections %v", data)
-		return -1
+		return make([]Connection,0)
 	}
-	return len(v)
+	return v
 }
 
 func nodes(data []byte) []Node {

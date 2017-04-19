@@ -27,9 +27,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	connectionList := connections(buf)
 	connections := Connections{
 		Name:  rabbitmq.Host,
-		Count: connections(buf),
+		Count: len(connectionList),
 	}
 	log.Println(connections)
 	sendUdp(config.InfluxDB, connections)
@@ -42,5 +43,9 @@ func main() {
 	for _, node := range nodes {
 		log.Println(node)
 		sendUdp(config.InfluxDB, node)
+	}
+	
+	for _, c := range connectionList {
+		log.Println(c)
 	}
 }
